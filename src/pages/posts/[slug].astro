@@ -24,7 +24,7 @@ const { Content } = await render(post);
       <Image class="cover" src={post.data.cover} alt="" width={800} />
     )}
     {post.data.interviewee && (
-      <aside class="interviewee">
+      <aside class="interviewee" aria-label="受访者简介">
         <strong>受访者：{post.data.interviewee}</strong>
         {post.data.intervieweeBio && <p>{post.data.intervieweeBio}</p>}
       </aside>
