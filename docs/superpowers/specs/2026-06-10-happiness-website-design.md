@@ -64,6 +64,7 @@ src/content/
 |------|------|------|------|
 | title | string | 是 | 书名 |
 | author | string | 是 | 作者 |
+| pubDate | date | 是 | 加入书单日期，用于"最新书籍"排序 |
 | cover | image | 是 | 封面图 |
 | oneLiner | string | 是 | 一句话推荐语 |
 | tags | string[] | 是 | 标签 |
