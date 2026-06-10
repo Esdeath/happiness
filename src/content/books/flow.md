@@ -9,7 +9,7 @@ purchaseLinks:
   - platform: 京东
     url: https://item.jd.com/12260628.html
   - platform: 当当
-    url: http://product.dangdang.com/25229510.html
+    url: https://product.dangdang.com/25229510.html
 ---
 
 「心流」是积极心理学的奠基之作。（书评示例，可替换为真实推荐理由。拿到联盟佣金链接后，直接替换上方 purchaseLinks 里的 url 即可。）

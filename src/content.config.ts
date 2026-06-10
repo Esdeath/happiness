@@ -13,6 +13,9 @@ const posts = defineCollection({
       interviewee: z.string().optional(),
       intervieweeBio: z.string().optional(),
       draft: z.boolean().default(false),
+    })
+    .refine((data) => !data.intervieweeBio || data.interviewee, {
+      message: 'intervieweeBio 需要同时填写 interviewee',
     }),
 });
 
