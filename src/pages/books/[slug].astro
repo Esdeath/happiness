@@ -34,6 +34,7 @@ const { Content } = await render(book);
 
 <style>
   .book-head { display: flex; gap: 1.5rem; align-items: flex-start; }
+  .book-head > div { min-width: 0; }
   .book-head img {
     width: 140px;
     height: auto;
@@ -41,7 +42,7 @@ const { Content } = await render(book);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     flex-shrink: 0;
   }
-  h1 { margin: 0 0 0.3rem; font-size: 1.6rem; }
+  h1 { margin: 0 0 0.3rem; font-size: 1.6rem; overflow-wrap: break-word; }
   .author { color: var(--color-muted); margin: 0 0 0.5rem; }
   .one-liner { margin: 0 0 0.8rem; }
   @media (max-width: 480px) {

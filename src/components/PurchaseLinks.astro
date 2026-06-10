@@ -6,10 +6,15 @@ const { links } = Astro.props;
 ---
 
 {links.length > 0 && (
-  <div class="purchase">
+  <div class="purchase" role="group" aria-label="购买渠道">
     <span class="label">去购买</span>
     {links.map((link) => (
-      <a href={link.url} target="_blank" rel="nofollow sponsored noopener">
+      <a
+        href={link.url}
+        target="_blank"
+        rel="nofollow sponsored noopener"
+        aria-label={`在 ${link.platform} 购买（新窗口打开）`}
+      >
         {link.platform}
       </a>
     ))}
@@ -36,4 +41,8 @@ const { links } = Astro.props;
     font-size: 0.9rem;
   }
   .purchase a:hover { text-decoration: none; filter: brightness(1.1); }
+  .purchase a:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--color-accent);
+  }
 </style>
