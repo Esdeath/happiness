@@ -75,8 +75,8 @@ src/content/
 ## 5. 页面结构
 
 ```
-/                  首页：站点理念一句话 + 最新文章 + 精选书籍
-/posts             文章列表（含访谈），时间倒序，支持按标签筛选
+/                  首页：站点理念一句话 + 最新 5 篇文章 + 最新 4 本书
+/posts             文章列表（含访谈），时间倒序；标签点击跳转 /tags/[tag]（纯静态，无客户端筛选）
 /posts/[slug]      文章详情；含受访者字段时渲染介绍块
 /books             书单页：卡片列表（封面 + 一句话推荐语）
 /books/[slug]      书籍详情：封面、作者、书评 + 醒目"去购买"按钮组
@@ -90,7 +90,7 @@ src/content/
 
 - **标签/分类**：frontmatter `tags` 数组，构建时静态生成标签页
 - **站内搜索**：Pagefind，构建后生成静态全文索引（中文支持好），搜索框在导航栏
-- **RSS**：`@astrojs/rss` 官方插件
+- **RSS**：`@astrojs/rss` 官方插件；订阅源仅含 posts（文章与访谈），书籍更新不进 RSS
 - **评论**：giscus，挂在 posts 与 books 详情页底部，数据存于 GitHub Discussions
 - **购买链接**：详情页按钮组，外链统一 `rel="nofollow sponsored"`，新窗口打开
 
