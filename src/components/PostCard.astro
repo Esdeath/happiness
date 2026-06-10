@@ -1,0 +1,40 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../lib/content';
+import TagList from './TagList.astro';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+const { post } = Astro.props;
+---
+
+<article class="card">
+  <h3>
+    <a href={`/posts/${post.id}`}>{post.data.title}</a>
+    {post.data.interviewee && <span class="badge">访谈</span>}
+  </h3>
+  <p class="meta">{formatDate(post.data.pubDate)}</p>
+  <p>{post.data.summary}</p>
+  <TagList tags={post.data.tags} />
+</article>
+
+<style>
+  .card {
+    padding: 1.2rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  h3 { margin: 0 0 0.3rem; }
+  h3 a { color: var(--color-text); }
+  h3 a:hover { color: var(--color-accent); }
+  .badge {
+    font-size: 0.7rem;
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+    border-radius: 4px;
+    padding: 0 0.4rem;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+  }
+  .meta { color: var(--color-muted); font-size: 0.85rem; margin: 0 0 0.4rem; }
+</style>

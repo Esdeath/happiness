@@ -1,0 +1,31 @@
+---
+interface Props {
+  tags: string[];
+}
+const { tags } = Astro.props;
+---
+
+<ul class="tags">
+  {tags.map((tag) => (
+    <li><a href={`/tags/${encodeURIComponent(tag)}`}>{tag}</a></li>
+  ))}
+</ul>
+
+<style>
+  .tags {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .tags a {
+    font-size: 0.8rem;
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+    padding: 0.1rem 0.6rem;
+    border-radius: 999px;
+  }
+  .tags a:hover { text-decoration: none; filter: brightness(0.95); }
+</style>

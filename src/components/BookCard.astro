@@ -1,0 +1,40 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  book: CollectionEntry<'books'>;
+}
+const { book } = Astro.props;
+---
+
+<a class="book" href={`/books/${book.id}`}>
+  <Image src={book.data.cover} alt={`《${book.data.title}》封面`} width={160} />
+  <div>
+    <h3>{book.data.title}</h3>
+    <p class="author">{book.data.author}</p>
+    <p class="one-liner">{book.data.oneLiner}</p>
+  </div>
+</a>
+
+<style>
+  .book {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text);
+  }
+  .book:hover { text-decoration: none; }
+  .book:hover h3 { color: var(--color-accent); }
+  .book img {
+    width: 80px;
+    height: auto;
+    border-radius: 4px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  }
+  h3 { margin: 0 0 0.2rem; }
+  .author { color: var(--color-muted); font-size: 0.85rem; margin: 0 0 0.4rem; }
+  .one-liner { margin: 0; font-size: 0.95rem; }
+</style>
