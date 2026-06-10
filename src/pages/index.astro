@@ -1,7 +1,41 @@
 ---
-import '../styles/global.css';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import BookCard from '../components/BookCard.astro';
+import { sortByDateDesc } from '../lib/content';
+
+const posts = sortByDateDesc(
+  await getCollection('posts', ({ data }) => !data.draft),
+).slice(0, 5);
+const books = sortByDateDesc(
+  await getCollection('books', ({ data }) => !data.draft),
+).slice(0, 4);
 ---
-<html lang="zh-CN">
-  <head><meta charset="utf-8" /><title>追寻幸福</title></head>
-  <body><h1>追寻幸福</h1></body>
-</html>
+
+<BaseLayout>
+  <section class="hero">
+    <h1>追寻幸福</h1>
+    <p>幸福不是终点，而是一种行进的方式。这里有文章、对话，和值得一读的书。</p>
+  </section>
+
+  <section>
+    <h2>最新文章</h2>
+    {posts.map((post) => <PostCard post={post} />)}
+    <p class="more"><a href="/posts">全部文章 →</a></p>
+  </section>
+
+  <section>
+    <h2>最新书籍</h2>
+    {books.map((book) => <BookCard book={book} />)}
+    <p class="more"><a href="/books">全部书单 →</a></p>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero { text-align: center; padding: 2rem 0 1rem; }
+  .hero h1 { font-size: 2.2rem; margin: 0 0 0.5rem; }
+  .hero p { color: var(--color-muted); }
+  h2 { margin-top: 2.5rem; }
+  .more { text-align: right; margin-top: 0.8rem; }
+</style>
