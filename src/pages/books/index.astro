@@ -1,0 +1,15 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BookCard from '../../components/BookCard.astro';
+import { sortByDateDesc } from '../../lib/content';
+
+const books = sortByDateDesc(
+  await getCollection('books', ({ data }) => !data.draft),
+);
+---
+
+<BaseLayout title="书单" description="关于幸福的推荐书单。">
+  <h1>书单</h1>
+  {books.map((book) => <BookCard book={book} />)}
+</BaseLayout>

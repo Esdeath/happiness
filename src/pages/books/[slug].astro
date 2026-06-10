@@ -1,0 +1,50 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TagList from '../../components/TagList.astro';
+import PurchaseLinks from '../../components/PurchaseLinks.astro';
+import Giscus from '../../components/Giscus.astro';
+
+export async function getStaticPaths() {
+  const books = await getCollection('books', ({ data }) => !data.draft);
+  return books.map((book) => ({ params: { slug: book.id }, props: { book } }));
+}
+
+const { book } = Astro.props;
+const { Content } = await render(book);
+---
+
+<BaseLayout title={book.data.title} description={book.data.oneLiner}>
+  <article data-pagefind-body>
+    <div class="book-head">
+      <Image src={book.data.cover} alt={`《${book.data.title}》封面`} width={240} />
+      <div>
+        <h1>{book.data.title}</h1>
+        <p class="author">{book.data.author}</p>
+        <p class="one-liner">{book.data.oneLiner}</p>
+        <TagList tags={book.data.tags} />
+      </div>
+    </div>
+    <PurchaseLinks links={book.data.purchaseLinks} />
+    <Content />
+  </article>
+  <Giscus />
+</BaseLayout>
+
+<style>
+  .book-head { display: flex; gap: 1.5rem; align-items: flex-start; }
+  .book-head img {
+    width: 140px;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+  }
+  h1 { margin: 0 0 0.3rem; font-size: 1.6rem; }
+  .author { color: var(--color-muted); margin: 0 0 0.5rem; }
+  .one-liner { margin: 0 0 0.8rem; }
+  @media (max-width: 480px) {
+    .book-head { flex-direction: column; }
+  }
+</style>

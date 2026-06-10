@@ -1,0 +1,39 @@
+---
+interface Props {
+  links: { platform: string; url: string }[];
+}
+const { links } = Astro.props;
+---
+
+{links.length > 0 && (
+  <div class="purchase">
+    <span class="label">去购买</span>
+    {links.map((link) => (
+      <a href={link.url} target="_blank" rel="nofollow sponsored noopener">
+        {link.platform}
+      </a>
+    ))}
+  </div>
+)}
+
+<style>
+  .purchase {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    background: var(--color-accent-soft);
+    border-radius: 8px;
+    padding: 0.8rem 1.2rem;
+    margin: 1.5rem 0;
+  }
+  .label { font-weight: 600; }
+  .purchase a {
+    background: var(--color-accent);
+    color: #fff;
+    padding: 0.3rem 1rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+  }
+  .purchase a:hover { text-decoration: none; filter: brightness(1.1); }
+</style>
