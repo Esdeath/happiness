@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import BookCard from '../../components/BookCard.astro';
+import { collectTags, sortByDateDesc } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  const books = await getCollection('books', ({ data }) => !data.draft);
+  return collectTags([...posts, ...books]).map((tag) => ({
+    params: { tag },
+    props: {
+      posts: sortByDateDesc(posts.filter((p) => p.data.tags.includes(tag))),
+      books: sortByDateDesc(books.filter((b) => b.data.tags.includes(tag))),
+    },
+  }));
+}
+
+const { tag } = Astro.params;
+const { posts, books } = Astro.props;
+---
+
+<BaseLayout title={`标签：${tag}`} description={`所有打了「${tag}」标签的文章与书籍。`}>
+  <h1>标签：{tag}</h1>
+  {posts.length > 0 && (
+    <section>
+      <h2>文章</h2>
+      {posts.map((post) => <PostCard post={post} />)}
+    </section>
+  )}
+  {books.length > 0 && (
+    <section>
+      <h2>书籍</h2>
+      {books.map((book) => <BookCard book={book} />)}
+    </section>
+  )}
+</BaseLayout>
