@@ -5,11 +5,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title="搜索" description="搜索本站的文章与书籍。">
   <h1>搜索</h1>
   <p class="note">搜索索引在构建时生成，本地 dev 模式下不可用（用 npm run build && npm run preview 验证）。</p>
-  <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+  <Fragment slot="head">
+    <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+  </Fragment>
   <div id="search"></div>
+  <noscript><p>搜索功能需要启用 JavaScript。</p></noscript>
   <script is:inline src="/pagefind/pagefind-ui.js"></script>
   <script is:inline>
     window.addEventListener('DOMContentLoaded', () => {
+      if (typeof PagefindUI === 'undefined') return; // dev 模式未生成索引
       const ui = new PagefindUI({
         element: '#search',
         showSubResults: true,
