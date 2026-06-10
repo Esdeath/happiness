@@ -4,6 +4,7 @@
   --color-text: #3d3a34;
   --color-muted: #6b6660;
   --color-accent: #b05a1e;
+  --color-accent-strong: #8f4715;
   --color-accent-soft: #f3e3d3;
   --color-border: #e8e0d4;
   --font-serif: "Noto Serif SC", "Songti SC", "SimSun", serif;
@@ -30,6 +31,11 @@ h1, h2, h3, h4 {
 
 a { color: var(--color-accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
+
+a:focus-visible, input:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
 
 img { max-width: 100%; height: auto; }
 
