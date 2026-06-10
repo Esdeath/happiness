@@ -23,6 +23,10 @@ describe('sortByDateDesc', () => {
 });
 
 describe('collectTags', () => {
+  it('空输入返回空数组', () => {
+    expect(collectTags([])).toEqual([]);
+  });
+
   it('合并多个集合的标签并去重', () => {
     const tags = collectTags([
       entry('2026-06-01', ['心理学', '哲学']),
@@ -38,5 +42,9 @@ describe('collectTags', () => {
 describe('formatDate', () => {
   it('输出中文长日期，时区固定为 Asia/Shanghai', () => {
     expect(formatDate(new Date('2026-06-10'))).toBe('2026年6月10日');
+  });
+
+  it('跨午夜时刻按上海时区换日（UTC 17:00 = 上海次日 01:00）', () => {
+    expect(formatDate(new Date('2026-06-10T17:00:00.000Z'))).toBe('2026年6月11日');
   });
 });
