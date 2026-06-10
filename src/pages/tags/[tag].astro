@@ -21,8 +21,9 @@ const { tag } = Astro.params;
 const { posts, books } = Astro.props;
 ---
 
-<BaseLayout title={`标签：${tag}`} description={`所有打了「${tag}」标签的文章与书籍。`}>
+<BaseLayout title={`标签：${tag}`} description={`「${tag}」标签下共有 ${posts.length} 篇文章、${books.length} 本书。`}>
   <h1>标签：{tag}</h1>
+  {posts.length === 0 && books.length === 0 && <p>此标签下暂无内容。</p>}
   {posts.length > 0 && (
     <section>
       <h2>文章</h2>
