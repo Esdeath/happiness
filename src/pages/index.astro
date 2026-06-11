@@ -14,28 +14,181 @@ const books = sortByDateDesc(
 ---
 
 <BaseLayout>
-  <section class="hero">
-    <h1>追寻幸福</h1>
-    <p>幸福不是终点，而是一种行进的方式。这里有文章、对话，和值得一读的书。</p>
+  <section class="hero wide">
+    <aside class="vertical-quote rise" style="animation-delay: 600ms" aria-hidden="true">
+      幸福不是终点，而是行进的方式。
+    </aside>
+
+    <div class="hero-body">
+      <div class="sun rise" aria-hidden="true"><i></i></div>
+      <p class="eyebrow rise" style="animation-delay: 120ms">一处安静的角落 · 关于幸福</p>
+      <h1 class="rise" style="animation-delay: 220ms">把日子过慢，<br />把幸福过深。</h1>
+      <p class="lede rise" style="animation-delay: 340ms">
+        这里记录关于幸福的思考与对话，也收藏那些值得慢慢读的书。
+      </p>
+      <div class="actions rise" style="animation-delay: 460ms">
+        <a class="btn btn-solid" href="/posts">开始阅读</a>
+        <a class="btn btn-ghost" href="/books">看看书单</a>
+      </div>
+    </div>
   </section>
 
-  <section>
-    <h2>最新文章</h2>
-    {posts.map((post) => <PostCard post={post} />)}
-    <p class="more"><a href="/posts">全部文章 →</a></p>
+  <div class="ornament" aria-hidden="true"><i></i></div>
+
+  <section class="block container">
+    <header class="block-head">
+      <h2>最新文章</h2>
+      <a class="more" href="/posts">全部文章 →</a>
+    </header>
+    <div class="post-list">
+      {posts.map((post, i) => (
+        <div class="rise" style={`animation-delay: ${i * 70}ms`}>
+          <PostCard post={post} />
+        </div>
+      ))}
+    </div>
   </section>
 
-  <section>
-    <h2>最新书籍</h2>
-    {books.map((book) => <BookCard book={book} />)}
-    <p class="more"><a href="/books">全部书单 →</a></p>
+  <section class="block wide">
+    <header class="block-head narrow-head">
+      <h2>最新书籍</h2>
+      <a class="more" href="/books">全部书单 →</a>
+    </header>
+    <div class="book-grid">
+      {books.map((book, i) => (
+        <div class="rise" style={`animation-delay: ${i * 80}ms`}>
+          <BookCard book={book} />
+        </div>
+      ))}
+    </div>
   </section>
 </BaseLayout>
 
 <style>
-  .hero { text-align: center; padding: 2rem 0 1rem; }
-  .hero h1 { font-size: 2.2rem; margin: 0 0 0.5rem; }
-  .hero p { color: var(--color-muted); }
-  h2 { margin-top: 2.5rem; }
-  .more { text-align: right; margin-top: 0.8rem; }
+  /* ——— Hero ——— */
+  .hero {
+    position: relative;
+    padding: clamp(4rem, 11vh, 7.5rem) 0 4.5rem;
+    text-align: center;
+  }
+  .hero-body { max-width: 38rem; margin: 0 auto; }
+
+  .sun {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .sun i {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 32%, #e8b27d, var(--persimmon) 78%);
+    box-shadow: 0 0 0 12px rgba(182, 84, 39, 0.07), 0 0 60px rgba(230, 168, 110, 0.55);
+    animation: breathe 7s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 12px rgba(182, 84, 39, 0.07), 0 0 60px rgba(230, 168, 110, 0.55); }
+    50% { transform: scale(1.08); box-shadow: 0 0 0 20px rgba(182, 84, 39, 0.05), 0 0 90px rgba(230, 168, 110, 0.75); }
+  }
+
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    letter-spacing: 0.45em;
+    text-indent: 0.45em;
+    color: var(--persimmon);
+    margin: 0 0 1.3rem;
+  }
+  h1 {
+    font-size: clamp(2.5rem, 7vw, 4rem);
+    font-weight: 900;
+    line-height: 1.4;
+    margin: 0 0 1.4rem;
+  }
+  .lede {
+    color: var(--ink-soft);
+    font-size: 1.1rem;
+    margin: 0 0 2.4rem;
+  }
+
+  .actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    font-family: var(--font-display);
+    letter-spacing: 0.18em;
+    text-indent: 0.09em;
+    padding: 0.7rem 2rem;
+    border-radius: 999px;
+    transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out),
+      background 0.3s, color 0.3s;
+  }
+  .btn-solid {
+    background: var(--persimmon);
+    color: var(--surface);
+    box-shadow: 0 6px 18px rgba(182, 84, 39, 0.28);
+  }
+  .btn-solid:hover {
+    background: var(--persimmon-deep);
+    color: var(--surface);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px rgba(182, 84, 39, 0.34);
+  }
+  .btn-ghost {
+    border: 1px solid var(--hairline);
+    color: var(--ink-soft);
+    background: rgba(255, 253, 246, 0.6);
+  }
+  .btn-ghost:hover {
+    color: var(--persimmon-deep);
+    border-color: var(--persimmon);
+    transform: translateY(-2px);
+  }
+
+  /* 竖排引文：像一枚悬在页边的书签 */
+  .vertical-quote {
+    position: absolute;
+    right: 1rem;
+    top: clamp(4rem, 11vh, 7.5rem);
+    writing-mode: vertical-rl;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    letter-spacing: 0.55em;
+    color: var(--ink-mute);
+    border-left: 1px solid var(--hairline);
+    padding-left: 1.1rem;
+    height: 17em;
+  }
+  @media (max-width: 900px) {
+    .vertical-quote { display: none; }
+  }
+
+  /* ——— 栏目 ——— */
+  .block { margin-top: 3.5rem; }
+  .block-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+  .narrow-head { max-width: var(--width-wide); }
+  .block-head h2 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin: 0;
+    padding-left: 0.9rem;
+    border-left: 4px solid var(--persimmon);
+  }
+  .more {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-mute);
+  }
+  .more:hover { color: var(--persimmon); }
+
+  .book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 2.4rem 1.8rem;
+  }
 </style>

@@ -18,6 +18,26 @@ export function collectTags(entries: Tagged[]): string[] {
   return [...tags].sort((a, b) => a.localeCompare(b, 'zh-Hans-CN'));
 }
 
+interface Categorized {
+  data: { tags: string[]; category?: string };
+}
+
+/** 按 category（缺省回退第一个 tag）分组，组名按中文排序，组内保持传入顺序。 */
+export function groupByCategory<T extends Categorized>(
+  entries: T[],
+): [string, T[]][] {
+  const groups = new Map<string, T[]>();
+  for (const e of entries) {
+    const key = e.data.category ?? e.data.tags[0] ?? '其他';
+    const list = groups.get(key) ?? [];
+    list.push(e);
+    groups.set(key, list);
+  }
+  return [...groups.entries()].sort(([a], [b]) =>
+    a.localeCompare(b, 'zh-Hans-CN'),
+  );
+}
+
 const dateFormatter = new Intl.DateTimeFormat('zh-CN', {
   dateStyle: 'long',
   timeZone: 'Asia/Shanghai',

@@ -4,6 +4,7 @@ author: 泰勒·本-沙哈尔
 pubDate: 2026-06-06
 cover: ./covers/happier.svg
 oneLiner: 哈佛积极心理学课的精华：幸福是可以学习的能力。
+category: 生活方式
 tags: [心理学, 生活方式]
 purchaseLinks: []
 ---

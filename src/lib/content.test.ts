@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { sortByDateDesc, collectTags, formatDate } from './content';
+import { sortByDateDesc, collectTags, formatDate, groupByCategory } from './content';
 
 const entry = (date: string, tags: string[] = ['心理学']) => ({
   data: { pubDate: new Date(date), tags },
@@ -36,6 +36,35 @@ describe('collectTags', () => {
     expect(tags).toContain('心理学');
     expect(tags).toContain('哲学');
     expect(tags).toContain('访谈');
+  });
+});
+
+describe('groupByCategory', () => {
+  const book = (category: string | undefined, tags: string[]) => ({
+    data: { category, tags },
+  });
+
+  it('优先用 category 分组，缺省回退第一个 tag', () => {
+    const groups = groupByCategory([
+      book('心理学', ['认知']),
+      book(undefined, ['哲学']),
+    ]);
+    expect(groups.map(([name]) => name)).toContain('心理学');
+    expect(groups.map(([name]) => name)).toContain('哲学');
+  });
+
+  it('组名按中文排序，组内保持传入顺序', () => {
+    const a = book('心理学', []);
+    const b = book('生活方式', []);
+    const c = book('心理学', []);
+    const groups = groupByCategory([a, b, c]);
+    expect(groups.map(([name]) => name)).toEqual(['生活方式', '心理学']);
+    expect(groups.find(([name]) => name === '心理学')?.[1]).toEqual([a, c]);
+  });
+
+  it('既无 category 也无 tag 时归入「其他」', () => {
+    const groups = groupByCategory([book(undefined, [])]);
+    expect(groups[0][0]).toBe('其他');
   });
 });
 

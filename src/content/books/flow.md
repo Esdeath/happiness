@@ -4,6 +4,7 @@ author: 米哈里·契克森米哈赖
 pubDate: 2026-06-02
 cover: ./covers/flow.svg
 oneLiner: 解释"完全沉浸"为何是幸福感最可靠的来源。
+category: 心理学
 tags: [心理学]
 purchaseLinks:
   - platform: 京东

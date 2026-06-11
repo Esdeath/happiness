@@ -28,6 +28,8 @@ const books = defineCollection({
       pubDate: z.coerce.date(),
       cover: image(),
       oneLiner: z.string(),
+      // 书单页按 category 分组展示；不填时回退到第一个 tag
+      category: z.string().optional(),
       tags: z.array(z.string()).min(1),
       purchaseLinks: z
         .array(z.object({ platform: z.string(), url: z.string().url() }))

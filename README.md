@@ -6,7 +6,7 @@
 
 - **写文章**：在 `src/content/posts/` 新建 `.md` 文件，文件名即 URL slug（用英文短横线命名，如 `on-gratitude.md`）
 - **写访谈**：同上，frontmatter 多填 `interviewee` 和 `intervieweeBio` 两个字段，tags 里加上 `访谈`
-- **推荐书**：在 `src/content/books/` 新建 `.md`，封面图放 `src/content/books/covers/`，frontmatter 的 `cover` 用相对路径引用
+- **推荐书**：在 `src/content/books/` 新建 `.md`，封面图放 `src/content/books/covers/`，frontmatter 的 `cover` 用相对路径引用；`category` 决定书单页的分组（如 `心理学`），不填时用第一个 tag
 - **草稿**：frontmatter 加 `draft: true`，构建时自动跳过
 - **佣金链接**：申请到联盟账号（京东联盟/当当联盟等）后，把推广链接替换进各书的 `purchaseLinks[].url` 即可，无需改代码
 - 字段写错时 `npm run build` 会直接报错并指出文件，放心改

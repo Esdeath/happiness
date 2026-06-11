@@ -16,33 +16,81 @@ const { Content } = await render(post);
 ---
 
 <BaseLayout title={post.data.title} description={post.data.summary}>
-  <article data-pagefind-body>
-    <h1>{post.data.title}</h1>
-    <p class="meta">{formatDate(post.data.pubDate)}</p>
-    <TagList tags={post.data.tags} />
+  <article class="container" data-pagefind-body>
+    <nav class="crumb rise" aria-label="返回">
+      <a href="/posts">← 返回文章</a>
+    </nav>
+    <header class="post-head rise" style="animation-delay: 100ms">
+      <p class="meta"><time>{formatDate(post.data.pubDate)}</time></p>
+      <h1>{post.data.title}</h1>
+      <div class="tags-row"><TagList tags={post.data.tags} /></div>
+    </header>
+
     {post.data.cover && (
-      <Image class="cover" src={post.data.cover} alt="" width={800} />
+      <Image class="cover rise" src={post.data.cover} alt="" width={920} style="animation-delay: 200ms" />
     )}
+
     {post.data.interviewee && (
-      <aside class="interviewee" aria-label="受访者简介">
-        <strong>受访者：{post.data.interviewee}</strong>
+      <aside class="interviewee rise" style="animation-delay: 240ms" aria-label="受访者简介">
+        <strong>受访者 · {post.data.interviewee}</strong>
         {post.data.intervieweeBio && <p>{post.data.intervieweeBio}</p>}
       </aside>
     )}
-    <Content />
+
+    <div class="prose rise" style="animation-delay: 280ms">
+      <Content />
+    </div>
   </article>
-  <Giscus />
+  <div class="container">
+    <Giscus />
+  </div>
 </BaseLayout>
 
 <style>
-  .meta { color: var(--color-muted); font-size: 0.9rem; }
-  .cover { border-radius: 8px; margin: 1.2rem 0; }
-  .interviewee {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 0.8rem 1.2rem;
-    margin: 1.5rem 0;
+  .crumb { padding: 2rem 0 0; }
+  .crumb a {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-mute);
   }
-  .interviewee p { margin: 0.3rem 0 0; color: var(--color-muted); font-size: 0.9rem; }
+  .crumb a:hover { color: var(--persimmon); }
+
+  .post-head { text-align: center; padding: 2.6rem 0 1.6rem; }
+  .meta {
+    font-family: var(--font-display);
+    color: var(--ink-mute);
+    font-size: 0.88rem;
+    letter-spacing: 0.2em;
+    margin: 0 0 0.9rem;
+  }
+  h1 {
+    font-size: clamp(1.8rem, 4.5vw, 2.5rem);
+    font-weight: 900;
+    margin: 0 0 1.1rem;
+  }
+  .tags-row { display: flex; justify-content: center; }
+
+  .cover {
+    border-radius: 12px;
+    margin: 0.8rem 0 1.6rem;
+    box-shadow: var(--shadow-card);
+  }
+
+  .interviewee {
+    background: rgba(255, 253, 246, 0.8);
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    padding: 1rem 1.4rem;
+    margin: 1.6rem 0;
+  }
+  .interviewee strong {
+    font-family: var(--font-display);
+    letter-spacing: 0.06em;
+  }
+  .interviewee p {
+    margin: 0.35rem 0 0;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+  }
 </style>

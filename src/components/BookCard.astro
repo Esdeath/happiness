@@ -8,33 +8,89 @@ interface Props {
 const { book } = Astro.props;
 ---
 
-<a class="book" href={`/books/${book.id}`}>
-  <Image src={book.data.cover} alt={`《${book.data.title}》封面`} width={160} />
-  <div>
-    <h3>{book.data.title}</h3>
-    <p class="author">{book.data.author}</p>
-    <p class="one-liner">{book.data.oneLiner}</p>
+<a class="book-card" href={`/books/${book.id}`}>
+  <div class="cover">
+    <Image src={book.data.cover} alt={`《${book.data.title}》封面`} width={340} />
   </div>
+  <h3>{book.data.title}</h3>
+  <p class="author">{book.data.author}</p>
+  <p class="one-liner">{book.data.oneLiner}</p>
 </a>
 
 <style>
-  .book {
-    display: flex;
-    gap: 1rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--color-border);
-    color: var(--color-text);
+  .book-card {
+    display: block;
+    color: var(--ink);
   }
-  .book:hover { text-decoration: none; }
-  .book:hover h3 { color: var(--color-accent); }
-  .book img {
-    width: 80px;
-    height: auto;
-    border-radius: 4px;
-    flex-shrink: 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+
+  /* 封面做出"一本书"的体积感：书脊高光 + 右侧页缘 */
+  .cover {
+    position: relative;
+    border-radius: 4px 10px 10px 4px;
+    overflow: hidden;
+    aspect-ratio: 5 / 7;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
   }
-  h3 { margin: 0 0 0.2rem; }
-  .author { color: var(--color-muted); font-size: 0.85rem; margin: 0 0 0.4rem; }
-  .one-liner { margin: 0; font-size: 0.95rem; }
+  .cover :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .cover::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 12px;
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.18),
+      rgba(255, 255, 255, 0.22) 45%,
+      rgba(0, 0, 0, 0.1) 70%,
+      transparent
+    );
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+  }
+  .cover::after {
+    content: "";
+    position: absolute;
+    inset: 1px 1px 1px auto;
+    width: 5px;
+    border-radius: 0 9px 9px 0;
+    background: repeating-linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.55) 0 1px,
+      rgba(0, 0, 0, 0.08) 1px 2px
+    );
+    pointer-events: none;
+  }
+
+  .book-card:hover .cover {
+    transform: translateY(-7px) rotate(-1deg);
+    box-shadow: var(--shadow-float);
+  }
+
+  h3 {
+    font-size: 1.05rem;
+    margin: 1rem 0 0.15rem;
+    transition: color 0.25s var(--ease-out);
+  }
+  .book-card:hover h3 { color: var(--persimmon); }
+  .author {
+    color: var(--ink-mute);
+    font-size: 0.85rem;
+    margin: 0 0 0.4rem;
+  }
+  .one-liner {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    line-height: 1.7;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 </style>

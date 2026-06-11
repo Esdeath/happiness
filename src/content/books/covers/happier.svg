@@ -1,4 +1,39 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="400" height="560" viewBox="0 0 400 560">
-  <rect width="400" height="560" fill="#7a8b6f"/>
-  <text x="200" y="280" text-anchor="middle" fill="#faf6f0" font-size="34" font-family="serif">幸福的方法</text>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6ead4"/>
+      <stop offset="1" stop-color="#ecd2ab"/>
+    </linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cf6a32"/>
+      <stop offset="1" stop-color="#a8431b"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="560" fill="url(#bg)"/>
+
+  <g>
+    <circle cx="200" cy="402" r="118" fill="none" stroke="#b65427" stroke-width="1" opacity="0.25"/>
+    <circle cx="200" cy="402" r="92" fill="none" stroke="#b65427" stroke-width="1" opacity="0.4"/>
+    <path d="M132 402 a68 68 0 0 1 136 0 Z" fill="url(#sun)"/>
+    <line x1="108" y1="402" x2="292" y2="402" stroke="#5c4632" stroke-width="2"/>
+  </g>
+
+  <g font-family="'Noto Serif SC','Songti SC','SimSun',serif">
+    <g font-size="58" font-weight="700" fill="#4a3623">
+      <text x="171" y="112">幸</text>
+      <text x="171" y="180">福</text>
+      <text x="171" y="248">的</text>
+      <text x="171" y="316">方</text>
+      <text x="171" y="384" fill="#f6ead4">法</text>
+    </g>
+    <g font-size="14" letter-spacing="2" fill="#7a5c3c">
+      <text x="60" y="86">哈</text>
+      <text x="60" y="110">佛</text>
+      <text x="60" y="134">幸</text>
+      <text x="60" y="158">福</text>
+      <text x="60" y="182">课</text>
+    </g>
+    <text x="200" y="520" font-size="15" letter-spacing="1.5" fill="#6b4f33" text-anchor="middle">泰勒 · 本-沙哈尔</text>
+  </g>
+  <line x1="84" y1="70" x2="84" y2="190" stroke="#7a5c3c" stroke-width="1" opacity="0.5"/>
 </svg>

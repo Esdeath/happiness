@@ -13,39 +13,160 @@ export async function getStaticPaths() {
 
 const { book } = Astro.props;
 const { Content } = await render(book);
+const category = book.data.category ?? book.data.tags[0];
 ---
 
 <BaseLayout title={book.data.title} description={book.data.oneLiner}>
   <article data-pagefind-body>
-    <div class="book-head">
-      <Image src={book.data.cover} alt={`《${book.data.title}》封面`} width={240} />
-      <div>
+    <nav class="crumb container rise" aria-label="返回">
+      <a href="/books">← 返回书单</a>
+    </nav>
+
+    <header class="book-hero container rise" style="animation-delay: 100ms">
+      <!-- 封面在身后晕开一层环境光 -->
+      <div class="cover-stage">
+        <Image
+          class="ambient"
+          src={book.data.cover}
+          alt=""
+          width={120}
+          aria-hidden="true"
+        />
+        <div class="cover">
+          <Image src={book.data.cover} alt={`《${book.data.title}》封面`} width={480} />
+        </div>
+      </div>
+
+      <div class="info">
+        {category && <p class="category">{category}</p>}
         <h1>{book.data.title}</h1>
         <p class="author">{book.data.author}</p>
-        <p class="one-liner">{book.data.oneLiner}</p>
+        <blockquote class="one-liner">{book.data.oneLiner}</blockquote>
         <TagList tags={book.data.tags} />
+        <PurchaseLinks links={book.data.purchaseLinks} />
       </div>
+    </header>
+
+    <div class="ornament rise" style="animation-delay: 220ms" aria-hidden="true"><i></i></div>
+
+    <div class="prose container rise" style="animation-delay: 300ms">
+      <h2 class="why">为什么推荐这本书</h2>
+      <Content />
     </div>
-    <PurchaseLinks links={book.data.purchaseLinks} />
-    <Content />
   </article>
-  <Giscus />
+  <div class="container">
+    <Giscus />
+  </div>
 </BaseLayout>
 
 <style>
-  .book-head { display: flex; gap: 1.5rem; align-items: flex-start; }
-  .book-head > div { min-width: 0; }
-  .book-head img {
-    width: 140px;
-    height: auto;
-    border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    flex-shrink: 0;
+  .crumb { padding: 2rem 0 0; }
+  .crumb a {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-mute);
   }
-  h1 { margin: 0 0 0.3rem; font-size: 1.6rem; overflow-wrap: break-word; }
-  .author { color: var(--color-muted); margin: 0 0 0.5rem; }
-  .one-liner { margin: 0 0 0.8rem; }
-  @media (max-width: 480px) {
-    .book-head { flex-direction: column; }
+  .crumb a:hover { color: var(--persimmon); }
+
+  .book-hero {
+    display: grid;
+    grid-template-columns: minmax(190px, 240px) 1fr;
+    gap: clamp(1.8rem, 5vw, 3.2rem);
+    align-items: center;
+    padding: 3rem 0 1rem;
+  }
+
+  .cover-stage { position: relative; }
+  .ambient {
+    position: absolute;
+    inset: -12% -18%;
+    width: 136%;
+    height: 124%;
+    filter: blur(46px) saturate(1.5);
+    opacity: 0.45;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .cover {
+    position: relative;
+    border-radius: 5px 12px 12px 5px;
+    overflow: hidden;
+    aspect-ratio: 5 / 7;
+    box-shadow: var(--shadow-float);
+  }
+  .cover :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .cover::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 16px;
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.2),
+      rgba(255, 255, 255, 0.24) 45%,
+      rgba(0, 0, 0, 0.1) 70%,
+      transparent
+    );
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+  }
+
+  .info { min-width: 0; }
+  .category {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    text-indent: 0.15em;
+    color: var(--sage-deep);
+    background: var(--sage-soft);
+    border-radius: 999px;
+    padding: 0.25rem 1rem;
+    margin: 0 0 1rem;
+  }
+  h1 {
+    font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+    font-weight: 900;
+    margin: 0 0 0.4rem;
+    overflow-wrap: break-word;
+  }
+  .author {
+    font-family: var(--font-display);
+    color: var(--ink-mute);
+    letter-spacing: 0.08em;
+    margin: 0 0 1.4rem;
+  }
+  .one-liner {
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--persimmon);
+    margin: 0 0 1.4rem;
+    padding: 0.3em 0 0.3em 1.1em;
+  }
+  .info :global(.tags) { margin-bottom: 0.6rem; }
+
+  .why {
+    font-size: 1.3rem;
+    margin: 0 0 1em;
+  }
+
+  @media (max-width: 640px) {
+    .book-hero {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      text-align: center;
+      padding-top: 2.2rem;
+    }
+    .cover-stage { width: min(58vw, 230px); }
+    .one-liner {
+      text-align: left;
+    }
+    .info :global(.tags) { justify-content: center; }
   }
 </style>

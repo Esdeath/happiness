@@ -21,11 +21,20 @@ const { tags } = Astro.props;
     flex-wrap: wrap;
   }
   .tags a {
-    font-size: 0.8rem;
-    background: var(--color-accent-soft);
-    color: var(--color-accent-strong);
-    padding: 0.1rem 0.6rem;
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+    border: 1px solid var(--hairline);
+    background: rgba(255, 253, 246, 0.7);
+    padding: 0.12rem 0.75rem;
     border-radius: 999px;
+    transition: all 0.25s var(--ease-out);
   }
-  .tags a:hover { text-decoration: none; filter: brightness(0.95); }
+  .tags a:hover {
+    color: var(--persimmon-deep);
+    border-color: var(--persimmon);
+    background: var(--persimmon-soft);
+  }
 </style>

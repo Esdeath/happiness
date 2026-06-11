@@ -22,18 +22,49 @@ const { posts, books } = Astro.props;
 ---
 
 <BaseLayout title={`标签：${tag}`} description={`「${tag}」标签下共有 ${posts.length} 篇文章、${books.length} 本书。`}>
-  <h1>标签：{tag}</h1>
-  {posts.length === 0 && books.length === 0 && <p>此标签下暂无内容。</p>}
+  <div class="page-head rise">
+    <p class="eyebrow">标 签</p>
+    <h1>「{tag}」</h1>
+    <p class="lede">{posts.length} 篇文章 · {books.length} 本书</p>
+  </div>
+
+  {posts.length === 0 && books.length === 0 && (
+    <p class="empty container">此标签下暂无内容。</p>
+  )}
+
   {posts.length > 0 && (
-    <section>
+    <section class="block container rise" style="animation-delay: 120ms">
       <h2>文章</h2>
       {posts.map((post) => <PostCard post={post} />)}
     </section>
   )}
+
   {books.length > 0 && (
-    <section>
+    <section class="block wide rise" style="animation-delay: 200ms">
       <h2>书籍</h2>
-      {books.map((book) => <BookCard book={book} />)}
+      <div class="grid">
+        {books.map((book) => <BookCard book={book} />)}
+      </div>
     </section>
   )}
 </BaseLayout>
+
+<style>
+  .empty { text-align: center; color: var(--ink-mute); }
+  .block { margin-bottom: 3rem; }
+  .block h2 {
+    font-size: 1.4rem;
+    font-weight: 900;
+    margin: 0 0 1.2rem;
+    padding-left: 0.9rem;
+    border-left: 4px solid var(--persimmon);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 2.4rem 1.8rem;
+  }
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 1.8rem 1.1rem; }
+  }
+</style>
