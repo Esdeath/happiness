@@ -13,7 +13,7 @@ tags: [心理学]               # 至少一个，优先复用现有 tag
 # 以下仅访谈类文章需要：
 # interviewee: 受访者姓名
 # intervieweeBio: 一句话介绍受访者背景。
-# cover: 可选，posts 一般不配封面
+# cover: 可选，posts 一般不配封面；确需配图时同样从来源/互联网获取，不自己生成
 ---
 ```
 

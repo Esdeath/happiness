@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { sortByDateDesc, collectTags, formatDate, groupByCategory } from './content';
+import {
+  sortByDateDesc,
+  collectTags,
+  formatDate,
+  groupByCategory,
+  ogImageUrl,
+} from './content';
 
 const entry = (date: string, tags: string[] = ['心理学']) => ({
   data: { pubDate: new Date(date), tags },
@@ -65,6 +71,23 @@ describe('groupByCategory', () => {
   it('既无 category 也无 tag 时归入「其他」', () => {
     const groups = groupByCategory([book(undefined, [])]);
     expect(groups[0][0]).toBe('其他');
+  });
+});
+
+describe('ogImageUrl', () => {
+  const site = new URL('https://example.com');
+
+  it('无封面时回退站点默认分享图（绝对 URL）', async () => {
+    expect(await ogImageUrl(undefined, site)).toBe(
+      'https://example.com/og-default.png',
+    );
+  });
+
+  it('SVG 封面回退默认图（社交平台不支持 SVG 的 OG）', async () => {
+    const svg = { src: '/c.svg', format: 'svg', width: 1, height: 1 } as never;
+    expect(await ogImageUrl(svg, site)).toBe(
+      'https://example.com/og-default.png',
+    );
   });
 });
 

@@ -4,18 +4,49 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TagList from '../../components/TagList.astro';
 import Giscus from '../../components/Giscus.astro';
-import { formatDate } from '../../lib/content';
+import { formatDate, ogImageUrl, sortByDateDesc } from '../../lib/content';
+import { blogPostingSchema, breadcrumbSchema } from '../../lib/schema';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts', ({ data }) => !data.draft);
-  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+  const sorted = sortByDateDesc(posts);
+  return posts.map((post) => {
+    const related = sorted
+      .filter(
+        (p) =>
+          p.id !== post.id &&
+          p.data.tags.some((t) => post.data.tags.includes(t)),
+      )
+      .slice(0, 3);
+    return { params: { slug: post.id }, props: { post, related } };
+  });
 }
 
-const { post } = Astro.props;
+const { post, related } = Astro.props;
 const { Content } = await render(post);
+const site = Astro.site!;
+const image = await ogImageUrl(post.data.cover, site);
+const jsonLd = [
+  blogPostingSchema(post, site, image),
+  breadcrumbSchema(
+    [
+      { name: '首页', path: '/' },
+      { name: '文章', path: '/posts' },
+      { name: post.data.title, path: `/posts/${post.id}/` },
+    ],
+    site,
+  ),
+];
 ---
 
-<BaseLayout title={post.data.title} description={post.data.summary}>
+<BaseLayout
+  title={post.data.title}
+  description={post.data.summary}
+  type="article"
+  publishedDate={post.data.pubDate}
+  image={image}
+  jsonLd={jsonLd}
+>
   <article class="container" data-pagefind-body>
     <nav class="crumb rise" aria-label="返回">
       <a href="/posts">← 返回文章</a>
@@ -41,6 +72,21 @@ const { Content } = await render(post);
       <Content />
     </div>
   </article>
+
+  {related.length > 0 && (
+    <nav class="related container" aria-label="相关文章" data-pagefind-ignore>
+      <h2>相关文章</h2>
+      <ul>
+        {related.map((p) => (
+          <li>
+            <a href={`/posts/${p.id}/`}>{p.data.title}</a>
+            <span>{p.data.summary}</span>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )}
+
   <div class="container">
     <Giscus />
   </div>
@@ -92,5 +138,31 @@ const { Content } = await render(post);
     margin: 0.35rem 0 0;
     color: var(--ink-soft);
     font-size: 0.92rem;
+  }
+
+  .related {
+    margin-top: 3.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--hairline);
+  }
+  .related h2 {
+    font-size: 1.2rem;
+    font-weight: 900;
+    margin: 0 0 1.1rem;
+    padding-left: 0.8rem;
+    border-left: 4px solid var(--persimmon);
+  }
+  .related ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.1rem; }
+  .related a {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: var(--ink);
+  }
+  .related a:hover { color: var(--persimmon); }
+  .related span {
+    display: block;
+    margin-top: 0.2rem;
+    color: var(--ink-mute);
+    font-size: 0.9rem;
   }
 </style>

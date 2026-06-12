@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
 import BookCard from '../components/BookCard.astro';
 import { sortByDateDesc } from '../lib/content';
+import { websiteSchema, organizationSchema } from '../lib/schema';
 
 const posts = sortByDateDesc(
   await getCollection('posts', ({ data }) => !data.draft),
@@ -11,9 +12,11 @@ const posts = sortByDateDesc(
 const books = sortByDateDesc(
   await getCollection('books', ({ data }) => !data.draft),
 ).slice(0, 4);
+
+const jsonLd = [websiteSchema(Astro.site!), organizationSchema(Astro.site!)];
 ---
 
-<BaseLayout>
+<BaseLayout jsonLd={jsonLd}>
   <section class="hero wide">
     <aside class="vertical-quote rise" style="animation-delay: 600ms" aria-hidden="true">
       幸福不是终点，而是行进的方式。

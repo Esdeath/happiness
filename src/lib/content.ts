@@ -1,3 +1,6 @@
+import type { ImageMetadata } from 'astro';
+import { SITE } from '../config';
+
 interface Dated {
   data: { pubDate: Date };
 }
@@ -45,4 +48,21 @@ const dateFormatter = new Intl.DateTimeFormat('zh-CN', {
 
 export function formatDate(date: Date): string {
   return dateFormatter.format(date);
+}
+
+const RASTER_FORMATS = new Set(['jpg', 'jpeg', 'png', 'webp', 'avif']);
+
+/**
+ * 解析 og:image 的绝对 URL。位图封面（jpg/png/webp…）→ 优化后再绝对化；
+ * SVG 封面或无封面 → 回退站点默认分享图。社交平台对 SVG 的 OG 支持差，故排除。
+ */
+export async function ogImageUrl(
+  cover: ImageMetadata | undefined,
+  site: URL | undefined,
+): Promise<string> {
+  const fallback = new URL(SITE.ogImage, site).href;
+  if (!cover || !RASTER_FORMATS.has(cover.format)) return fallback;
+  const { getImage } = await import('astro:assets');
+  const optimized = await getImage({ src: cover, width: 1200 });
+  return new URL(optimized.src, site).href;
 }

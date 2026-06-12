@@ -5,11 +5,28 @@ import { SITE } from '../config';
 interface Props {
   title?: string;
   description?: string;
+  image?: string; // og:image 绝对 URL；缺省用站点默认分享图
+  type?: 'website' | 'article';
+  publishedDate?: Date;
+  jsonLd?: object | object[]; // 注入的结构化数据
+  noindex?: boolean; // 低价值页（搜索/404）置为 true
 }
 
-const { title, description = SITE.description } = Astro.props;
+const {
+  title,
+  description = SITE.description,
+  image,
+  type = title ? 'article' : 'website',
+  publishedDate,
+  jsonLd,
+  noindex = false,
+} = Astro.props;
 const pageTitle = title ? `${title} · ${SITE.title}` : SITE.title;
 const path = Astro.url.pathname;
+const canonical = new URL(path, Astro.site).href;
+const ogImage = image ?? new URL(SITE.ogImage, Astro.site).href;
+const ogLocale = SITE.locale.replace('-', '_'); // zh-CN → zh_CN
+const schemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 const navItems = [
   { href: '/posts', label: '文章' },
   { href: '/books', label: '书单' },
@@ -23,11 +40,34 @@ const navItems = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#f6f1e6" />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex,follow" />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate" type="application/rss+xml" title={SITE.title} href="/rss.xml" />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+
+    <!-- Open Graph -->
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content={title ? 'article' : 'website'} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={SITE.title} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:image" content={ogImage} />
+    {type === 'article' && publishedDate && (
+      <meta property="article:published_time" content={publishedDate.toISOString()} />
+    )}
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {schemas.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+
     <title>{pageTitle}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

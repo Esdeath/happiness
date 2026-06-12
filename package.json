@@ -2,7 +2,9 @@
   "name": "happiness",
   "type": "module",
   "version": "0.1.0",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build && pagefind --site dist",
@@ -14,6 +16,7 @@
     "astro": "^5.7.0"
   },
   "devDependencies": {
+    "@astrojs/sitemap": "^3.7.3",
     "pagefind": "^1.3.0",
     "vitest": "^3.1.0"
   }

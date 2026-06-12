@@ -5,6 +5,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import TagList from '../../components/TagList.astro';
 import PurchaseLinks from '../../components/PurchaseLinks.astro';
 import Giscus from '../../components/Giscus.astro';
+import { ogImageUrl } from '../../lib/content';
+import { bookSchema, breadcrumbSchema } from '../../lib/schema';
 
 export async function getStaticPaths() {
   const books = await getCollection('books', ({ data }) => !data.draft);
@@ -14,9 +16,27 @@ export async function getStaticPaths() {
 const { book } = Astro.props;
 const { Content } = await render(book);
 const category = book.data.category ?? book.data.tags[0];
+const site = Astro.site!;
+const image = await ogImageUrl(book.data.cover, site);
+const jsonLd = [
+  bookSchema(book, site),
+  breadcrumbSchema(
+    [
+      { name: '首页', path: '/' },
+      { name: '书单', path: '/books' },
+      { name: book.data.title, path: `/books/${book.id}/` },
+    ],
+    site,
+  ),
+];
 ---
 
-<BaseLayout title={book.data.title} description={book.data.oneLiner}>
+<BaseLayout
+  title={book.data.title}
+  description={book.data.oneLiner}
+  image={image}
+  jsonLd={jsonLd}
+>
   <article data-pagefind-body>
     <nav class="crumb container rise" aria-label="返回">
       <a href="/books">← 返回书单</a>

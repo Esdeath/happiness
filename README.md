@@ -4,6 +4,8 @@
 
 ## 日常写作
 
+> 在 Claude Code 里可以直接说"写一篇关于 X 的文章""翻译这个链接""总结《某本书》"，会自动触发 `.claude/skills/write-article/` 这个 skill 按站点规范产出内容。以下是手动写作的约定：
+
 - **写文章**：在 `src/content/posts/` 新建 `.md` 文件，文件名即 URL slug（用英文短横线命名，如 `on-gratitude.md`）
 - **写访谈**：同上，frontmatter 多填 `interviewee` 和 `intervieweeBio` 两个字段，tags 里加上 `访谈`
 - **推荐书**：在 `src/content/books/` 新建 `.md`，封面图放 `src/content/books/covers/`，frontmatter 的 `cover` 用相对路径引用；`category` 决定书单页的分组（如 `心理学`），不填时用第一个 tag
