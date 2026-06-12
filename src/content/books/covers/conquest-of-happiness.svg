@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="560" viewBox="0 0 400 560">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0" stop-color="#2f4858"/>
+      <stop offset="1" stop-color="#19262f"/>
+    </linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f0c894"/>
+      <stop offset="1" stop-color="#d99a5b"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="560" fill="url(#bg)"/>
+
+  <circle cx="300" cy="150" r="40" fill="url(#sun)"/>
+  <circle cx="300" cy="150" r="53" fill="none" stroke="#f0c894" stroke-width="1" opacity="0.32"/>
+  <line x1="196" y1="150" x2="400" y2="150" stroke="#e9e2cf" stroke-width="1" opacity="0.22"/>
+
+  <g fill="none" stroke="#e9e2cf" stroke-linecap="round">
+    <path d="M214 560 L294 178" stroke-width="2" opacity="0.5"/>
+    <path d="M394 560 L306 178" stroke-width="2" opacity="0.5"/>
+    <path d="M306 552 L300 192" stroke-width="2" stroke-dasharray="10 14" opacity="0.4"/>
+  </g>
+
+  <g font-family="'Noto Serif SC','Songti SC','SimSun',serif" fill="#f2ead8">
+    <text x="54" y="186" font-size="76" font-weight="700">幸</text>
+    <text x="54" y="280" font-size="76" font-weight="700">福</text>
+    <text x="54" y="374" font-size="76" font-weight="700">之</text>
+    <text x="54" y="468" font-size="76" font-weight="700">路</text>
+    <g font-size="16" letter-spacing="2" opacity="0.72">
+      <text x="150" y="200">征</text>
+      <text x="150" y="230">服</text>
+      <text x="150" y="260">幸</text>
+      <text x="150" y="290">福</text>
+    </g>
+    <text x="54" y="524" font-size="15" letter-spacing="1.5" opacity="0.7">伯特兰 · 罗素</text>
+  </g>
+  <line x1="138" y1="150" x2="138" y2="480" stroke="#f2ead8" stroke-width="1" opacity="0.28"/>
+</svg>
