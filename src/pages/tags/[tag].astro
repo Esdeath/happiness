@@ -23,7 +23,6 @@ const { posts, books } = Astro.props;
 
 <BaseLayout title={`标签：${tag}`} description={`「${tag}」标签下共有 ${posts.length} 篇文章、${books.length} 本书。`}>
   <div class="page-head rise">
-    <p class="eyebrow">标 签</p>
     <h1>「{tag}」</h1>
     <p class="lede">{posts.length} 篇文章 · {books.length} 本书</p>
   </div>
@@ -57,7 +56,7 @@ const { posts, books } = Astro.props;
     font-weight: 900;
     margin: 0 0 1.2rem;
     padding-left: 0.9rem;
-    border-left: 4px solid var(--persimmon);
+    border-left: 5px solid var(--peach);
   }
   .grid {
     display: grid;

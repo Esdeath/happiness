@@ -4,21 +4,39 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout title="页面不存在" noindex>
   <div class="lost container rise">
+    <div class="mascot mascot-lost" aria-hidden="true">
+      <span class="mascot-face">
+        <span class="eye eye-l"></span>
+        <span class="eye eye-r"></span>
+        <span class="cheek cheek-l"></span>
+        <span class="cheek cheek-r"></span>
+        <span class="mouth"></span>
+      </span>
+    </div>
     <p class="code">四〇四</p>
-    <h1>这一页是空白的</h1>
+    <h1>这一页好像走丢了</h1>
     <p class="hint">你要找的页面不在这里。不妨从<a href="/">首页</a>重新出发，或者去<a href="/books">书单</a>里随便翻翻。</p>
   </div>
 </BaseLayout>
 
 <style>
-  .lost { text-align: center; padding: 6rem 0 4rem; }
+  .lost { text-align: center; padding: 5rem 0 4rem; }
+  .mascot-lost {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 1.5rem;
+    animation: wobble 3s ease-in-out infinite;
+  }
+  @keyframes wobble {
+    0%, 100% { transform: rotate(-8deg); }
+    50% { transform: rotate(8deg); }
+  }
   .code {
     font-family: var(--font-display);
-    font-size: clamp(3rem, 10vw, 5rem);
-    font-weight: 900;
-    letter-spacing: 0.2em;
-    color: var(--persimmon-soft);
-    -webkit-text-stroke: 1.5px var(--persimmon);
+    font-size: clamp(2.6rem, 9vw, 4.4rem);
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    color: var(--primary);
     margin: 0 0 0.5rem;
   }
   h1 { font-size: 1.6rem; margin: 0 0 1rem; }

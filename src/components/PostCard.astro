@@ -22,51 +22,58 @@ const { post } = Astro.props;
 <style>
   .card {
     position: relative;
-    padding: 1.6rem 0 1.7rem;
+    padding: 1.05rem 0;
     border-bottom: 1px solid var(--hairline);
+    transition: transform 0.22s var(--ease-out);
   }
-  .card::before {
-    content: "";
-    position: absolute;
-    left: -1.25rem;
-    top: 1.9rem;
-    bottom: 1.9rem;
-    width: 3px;
-    border-radius: 3px;
-    background: var(--persimmon);
-    opacity: 0;
-    transition: opacity 0.3s var(--ease-out);
+  .card:hover {
+    transform: translateX(3px);
   }
-  .card:hover::before { opacity: 0.85; }
 
   .meta {
     display: flex;
     align-items: center;
     gap: 0.6rem;
     color: var(--ink-mute);
-    font-size: 0.85rem;
-    margin: 0 0 0.45rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin: 0 0 0.32rem;
   }
   .badge {
-    font-family: var(--font-display);
+    font-family: var(--font-body);
+    font-weight: 800;
     font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    color: var(--sage-deep);
-    background: var(--sage-soft);
-    border-radius: 999px;
-    padding: 0.05rem 0.6rem;
+    letter-spacing: 0;
+    color: var(--leaf-deep);
+    background: rgba(228, 243, 220, 0.78);
+    border-radius: var(--r-pill);
+    padding: 0.04rem 0.5rem;
   }
   h3 {
-    font-size: 1.25rem;
-    margin: 0 0 0.4rem;
+    position: relative;
+    z-index: 1;
+    font-size: 1.16rem;
+    margin: 0 0 0.28rem;
+    overflow-wrap: anywhere;
   }
   h3 a {
+    display: block;
     color: var(--ink);
+    overflow-wrap: anywhere;
     transition: color 0.25s var(--ease-out);
   }
-  h3 a:hover { color: var(--persimmon); }
+  h3 a:hover { color: var(--primary-deep); }
   .summary {
+    position: relative;
+    z-index: 1;
     color: var(--ink-soft);
-    margin: 0 0 0.7rem;
+    margin: 0 0 0.54rem;
+    font-size: 0.96rem;
+    line-height: 1.72;
+    overflow-wrap: anywhere;
+  }
+  .card :global(.tags) {
+    position: relative;
+    z-index: 1;
   }
 </style>

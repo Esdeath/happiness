@@ -1,14 +1,14 @@
 ---
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
-import BookCard from '../components/BookCard.astro';
 import { sortByDateDesc } from '../lib/content';
 import { websiteSchema, organizationSchema } from '../lib/schema';
 
 const posts = sortByDateDesc(
   await getCollection('posts', ({ data }) => !data.draft),
-).slice(0, 5);
+).slice(0, 4);
 const books = sortByDateDesc(
   await getCollection('books', ({ data }) => !data.draft),
 ).slice(0, 4);
@@ -17,181 +17,195 @@ const jsonLd = [websiteSchema(Astro.site!), organizationSchema(Astro.site!)];
 ---
 
 <BaseLayout jsonLd={jsonLd}>
-  <section class="hero wide">
-    <aside class="vertical-quote rise" style="animation-delay: 600ms" aria-hidden="true">
-      幸福不是终点，而是行进的方式。
-    </aside>
+  <section class="home-hero rise">
+    <span class="mascot mascot-home" aria-hidden="true">
+      <span class="mascot-face">
+        <span class="eye eye-l"></span>
+        <span class="eye eye-r"></span>
+        <span class="cheek cheek-l"></span>
+        <span class="cheek cheek-r"></span>
+        <span class="mouth"></span>
+      </span>
+    </span>
+    <h1>庆祝每一天</h1>
+  </section>
 
-    <div class="hero-body">
-      <div class="sun rise" aria-hidden="true"><i></i></div>
-      <p class="eyebrow rise" style="animation-delay: 120ms">一处安静的角落 · 关于幸福</p>
-      <h1 class="rise" style="animation-delay: 220ms">把日子过慢，<br />把幸福过深。</h1>
-      <p class="lede rise" style="animation-delay: 340ms">
-        这里记录关于幸福的思考与对话，也收藏那些值得慢慢读的书。
-      </p>
-      <div class="actions rise" style="animation-delay: 460ms">
-        <a class="btn btn-solid" href="/posts">开始阅读</a>
-        <a class="btn btn-ghost" href="/books">看看书单</a>
+  <section class="home-grid wide">
+    <div class="panel rise" style="animation-delay: 80ms">
+      <header class="section-head">
+        <div>
+          <p>最近写下</p>
+          <h2>文章</h2>
+        </div>
+        <a href="/posts">全部</a>
+      </header>
+      <div class="post-list">
+        {posts.map((post) => <PostCard post={post} />)}
       </div>
     </div>
-  </section>
 
-  <div class="ornament" aria-hidden="true"><i></i></div>
-
-  <section class="block container">
-    <header class="block-head">
-      <h2>最新文章</h2>
-      <a class="more" href="/posts">全部文章 →</a>
-    </header>
-    <div class="post-list">
-      {posts.map((post, i) => (
-        <div class="rise" style={`animation-delay: ${i * 70}ms`}>
-          <PostCard post={post} />
+    <aside class="panel books-panel rise" style="animation-delay: 140ms">
+      <header class="section-head">
+        <div>
+          <p>慢慢翻</p>
+          <h2>书单</h2>
         </div>
-      ))}
-    </div>
-  </section>
-
-  <section class="block wide">
-    <header class="block-head narrow-head">
-      <h2>最新书籍</h2>
-      <a class="more" href="/books">全部书单 →</a>
-    </header>
-    <div class="book-grid">
-      {books.map((book, i) => (
-        <div class="rise" style={`animation-delay: ${i * 80}ms`}>
-          <BookCard book={book} />
-        </div>
-      ))}
-    </div>
+        <a href="/books">全部</a>
+      </header>
+      <div class="mini-books">
+        {books.map((book) => (
+          <a class="mini-book" href={`/books/${book.id}`}>
+            <Image src={book.data.cover} alt={`《${book.data.title}》封面`} width={92} />
+            <span>
+              <strong>{book.data.title}</strong>
+              <em>{book.data.author}</em>
+            </span>
+          </a>
+        ))}
+      </div>
+    </aside>
   </section>
 </BaseLayout>
 
 <style>
-  /* ——— Hero ——— */
-  .hero {
-    position: relative;
-    padding: clamp(4rem, 11vh, 7.5rem) 0 4.5rem;
-    text-align: center;
-  }
-  .hero-body { max-width: 38rem; margin: 0 auto; }
-
-  .sun {
+  .home-hero {
+    width: 100%;
+    max-width: var(--width-wide);
+    margin: clamp(1.1rem, 3vw, 1.9rem) auto clamp(1.45rem, 3.6vw, 2.4rem);
+    padding: clamp(1.5rem, 4vw, 2.8rem) 0 clamp(1.3rem, 3.2vw, 2.1rem);
     display: flex;
+    align-items: center;
     justify-content: center;
-    margin-bottom: 2rem;
+    gap: clamp(0.75rem, 2.4vw, 1.35rem);
+    text-align: center;
+    border-bottom: 1px solid rgba(234, 223, 206, 0.82);
+    background:
+      radial-gradient(circle at 50% 0%, rgba(255, 214, 107, 0.16), transparent 14rem),
+      linear-gradient(90deg, transparent, rgba(228, 243, 220, 0.5), transparent) left bottom / 100% 1px no-repeat;
   }
-  .sun i {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 38% 32%, #e8b27d, var(--persimmon) 78%);
-    box-shadow: 0 0 0 12px rgba(182, 84, 39, 0.07), 0 0 60px rgba(230, 168, 110, 0.55);
-    animation: breathe 7s ease-in-out infinite;
+  .mascot-home {
+    width: clamp(58px, 7vw, 82px);
+    height: clamp(58px, 7vw, 82px);
+    flex: none;
   }
-  @keyframes breathe {
-    0%, 100% { transform: scale(1); box-shadow: 0 0 0 12px rgba(182, 84, 39, 0.07), 0 0 60px rgba(230, 168, 110, 0.55); }
-    50% { transform: scale(1.08); box-shadow: 0 0 0 20px rgba(182, 84, 39, 0.05), 0 0 90px rgba(230, 168, 110, 0.75); }
-  }
-
-  .eyebrow {
-    font-family: var(--font-display);
-    font-size: 0.82rem;
-    letter-spacing: 0.45em;
-    text-indent: 0.45em;
-    color: var(--persimmon);
-    margin: 0 0 1.3rem;
-  }
-  h1 {
-    font-size: clamp(2.5rem, 7vw, 4rem);
-    font-weight: 900;
-    line-height: 1.4;
-    margin: 0 0 1.4rem;
-  }
-  .lede {
-    color: var(--ink-soft);
-    font-size: 1.1rem;
-    margin: 0 0 2.4rem;
+  .home-hero h1 {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(2.15rem, 6vw, 4.35rem);
+    line-height: 1.08;
+    white-space: nowrap;
+    overflow-wrap: anywhere;
   }
 
-  .actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-  .btn {
-    font-family: var(--font-display);
-    letter-spacing: 0.18em;
-    text-indent: 0.09em;
-    padding: 0.7rem 2rem;
-    border-radius: 999px;
-    transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out),
-      background 0.3s, color 0.3s;
+  .home-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(17rem, 0.85fr);
+    gap: clamp(1.4rem, 4vw, 2.4rem);
+    align-items: start;
   }
-  .btn-solid {
-    background: var(--persimmon);
-    color: var(--surface);
-    box-shadow: 0 6px 18px rgba(182, 84, 39, 0.28);
+  .panel {
+    min-width: 0;
   }
-  .btn-solid:hover {
-    background: var(--persimmon-deep);
-    color: var(--surface);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 26px rgba(182, 84, 39, 0.34);
-  }
-  .btn-ghost {
-    border: 1px solid var(--hairline);
-    color: var(--ink-soft);
-    background: rgba(255, 253, 246, 0.6);
-  }
-  .btn-ghost:hover {
-    color: var(--persimmon-deep);
-    border-color: var(--persimmon);
-    transform: translateY(-2px);
-  }
-
-  /* 竖排引文：像一枚悬在页边的书签 */
-  .vertical-quote {
-    position: absolute;
-    right: 1rem;
-    top: clamp(4rem, 11vh, 7.5rem);
-    writing-mode: vertical-rl;
-    font-family: var(--font-display);
-    font-size: 0.95rem;
-    letter-spacing: 0.55em;
-    color: var(--ink-mute);
-    border-left: 1px solid var(--hairline);
-    padding-left: 1.1rem;
-    height: 17em;
-  }
-  @media (max-width: 900px) {
-    .vertical-quote { display: none; }
-  }
-
-  /* ——— 栏目 ——— */
-  .block { margin-top: 3.5rem; }
-  .block-head {
+  .section-head {
     display: flex;
-    align-items: baseline;
+    align-items: end;
     justify-content: space-between;
     gap: 1rem;
-    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--hairline);
+    margin-bottom: 0.2rem;
   }
-  .narrow-head { max-width: var(--width-wide); }
-  .block-head h2 {
-    font-size: 1.5rem;
-    font-weight: 900;
+  .section-head p {
+    margin: 0 0 0.12rem;
+    color: var(--leaf-deep);
+    font-size: 0.82rem;
+    font-weight: 800;
+  }
+  .section-head h2 {
     margin: 0;
-    padding-left: 0.9rem;
-    border-left: 4px solid var(--persimmon);
+    font-size: clamp(1.45rem, 3vw, 2rem);
   }
-  .more {
-    font-family: var(--font-display);
-    font-size: 0.9rem;
-    letter-spacing: 0.1em;
+  .section-head a {
     color: var(--ink-mute);
+    font-weight: 800;
+    font-size: 0.9rem;
   }
-  .more:hover { color: var(--persimmon); }
-
-  .book-grid {
+  .section-head a:hover {
+    color: var(--primary-deep);
+  }
+  .post-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    gap: 2.4rem 1.8rem;
+  }
+  .books-panel {
+    background: rgba(255, 253, 248, 0.56);
+    border: 1px solid rgba(234, 223, 206, 0.78);
+    border-radius: var(--r-card);
+    padding: 1rem;
+  }
+  .mini-books {
+    display: grid;
+    gap: 0.65rem;
+  }
+  .mini-book {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: var(--r-card);
+    color: var(--ink);
+    transition: background 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+  }
+  .mini-book:hover {
+    background: var(--surface);
+    transform: translateY(-2px);
+  }
+  .mini-book :global(img) {
+    width: 42px;
+    aspect-ratio: 5 / 7;
+    object-fit: cover;
+    border-radius: 3px 6px 6px 3px;
+    box-shadow: 0 5px 12px rgba(86, 66, 48, 0.14);
+  }
+  .mini-book span {
+    min-width: 0;
+  }
+  .mini-book strong {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.95rem;
+  }
+  .mini-book em {
+    display: block;
+    color: var(--ink-mute);
+    font-style: normal;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  @media (max-width: 780px) {
+    .home-grid {
+      grid-template-columns: 1fr;
+    }
+    .books-panel {
+      background: transparent;
+      border: 0;
+      padding: 0;
+    }
+  }
+  @media (max-width: 520px) {
+    .home-hero {
+      margin-top: 0.7rem;
+      padding-block: 1.2rem 1.4rem;
+      gap: 0.7rem;
+    }
+    .home-hero h1 {
+      font-size: clamp(1.9rem, 10vw, 2.7rem);
+    }
+    .section-head {
+      align-items: center;
+    }
   }
 </style>

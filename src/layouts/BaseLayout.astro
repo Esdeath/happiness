@@ -39,7 +39,7 @@ const navItems = [
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#f6f1e6" />
+    <meta name="theme-color" content="#fff8eb" />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex,follow" />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -73,34 +73,25 @@ const navItems = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/style.css"
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Noto+Sans+SC:wght@400;500;700;800&family=ZCOOL+KuaiLe&display=swap"
     />
     <slot name="head" />
   </head>
   <body>
-    <!-- 晨光氛围：两团极慢漂移的暖色光晕 -->
-    <div class="sky" aria-hidden="true">
-      <i class="glow glow-dawn"></i>
-      <i class="glow glow-tea"></i>
-    </div>
+    <div class="sky" aria-hidden="true"></div>
 
     <header class="site-header">
       <nav class="wide" aria-label="主导航">
         <a class="brand" href="/">
-          <svg class="mark" viewBox="0 0 32 32" width="22" height="22" aria-hidden="true">
-            <circle cx="16" cy="16" r="14" fill="currentColor" opacity="0.92" />
-            <path
-              d="M9 17c2 4 5 6 7 6s5-2 7-6"
-              stroke="#f6f1e6"
-              stroke-width="2.5"
-              fill="none"
-              stroke-linecap="round"
-            />
-          </svg>
+          <span class="mascot mascot-sm" aria-hidden="true">
+            <span class="mascot-face">
+              <span class="eye eye-l"></span>
+              <span class="eye eye-r"></span>
+              <span class="cheek cheek-l"></span>
+              <span class="cheek cheek-r"></span>
+              <span class="mouth"></span>
+            </span>
+          </span>
           {SITE.title}
         </a>
         <div class="links">
@@ -114,7 +105,7 @@ const navItems = [
           ))}
         </div>
         <form class="search" action="/search" method="get">
-          <input type="search" name="q" placeholder="搜索…" aria-label="站内搜索" />
+          <input type="search" name="q" placeholder="搜点什么…" aria-label="站内搜索" />
         </form>
       </nav>
     </header>
@@ -124,136 +115,116 @@ const navItems = [
     </main>
 
     <footer class="site-footer">
-      <div class="ornament" aria-hidden="true"><i></i></div>
-      <p class="motto">慢慢走，欣赏啊。</p>
+      <div class="ornament" aria-hidden="true"><i></i><i></i><i></i></div>
+      <p class="motto">慢慢走，欣赏啊 ✿</p>
       <p class="meta">{SITE.title} · <a href="/rss.xml">RSS 订阅</a></p>
     </footer>
   </body>
 </html>
 
 <style>
-  /* ——— 氛围背景 ——— */
   .sky {
     position: fixed;
     inset: 0;
     z-index: -1;
     overflow: hidden;
     background:
-      radial-gradient(ellipse 90% 60% at 85% -10%, rgba(243, 225, 207, 0.9), transparent 60%),
+      linear-gradient(180deg, rgba(217, 239, 251, 0.68), transparent 14rem),
+      radial-gradient(circle at 14% 8%, rgba(255, 214, 107, 0.22), transparent 16rem),
       var(--paper);
   }
-  .glow {
-    position: absolute;
-    border-radius: 50%;
-    will-change: transform;
-  }
-  .glow-dawn {
-    width: 60vmax;
-    height: 60vmax;
-    top: -22vmax;
-    left: -14vmax;
-    background: radial-gradient(circle, rgba(230, 168, 110, 0.32), transparent 65%);
-    animation: drift-a 52s ease-in-out infinite alternate;
-  }
-  .glow-tea {
-    width: 55vmax;
-    height: 55vmax;
-    right: -18vmax;
-    bottom: -24vmax;
-    background: radial-gradient(circle, rgba(167, 181, 140, 0.28), transparent 65%);
-    animation: drift-b 64s ease-in-out infinite alternate;
-  }
-  @keyframes drift-a {
-    from { transform: translate(0, 0) scale(1); }
-    to { transform: translate(9vmax, 7vmax) scale(1.12); }
-  }
-  @keyframes drift-b {
-    from { transform: translate(0, 0) scale(1.08); }
-    to { transform: translate(-8vmax, -6vmax) scale(1); }
-  }
+  /* 吉祥物核心样式定义在 global.css（供各处复用）；
+     这里只补充导航内的交互 */
 
-  /* ——— 导航 ——— */
   .site-header {
     position: sticky;
     top: 0;
     z-index: 10;
-    background: rgba(246, 241, 230, 0.78);
+    background: rgba(255, 250, 240, 0.82);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(221, 210, 189, 0.6);
+    border-bottom: 1px solid rgba(234, 223, 206, 0.76);
   }
   nav {
-    padding: 0.85rem 1.25rem;
+    padding: 0.7rem 1.25rem;
     display: flex;
     align-items: center;
-    gap: 1.6rem;
+    gap: 1.25rem;
     flex-wrap: wrap;
   }
   .brand {
     display: inline-flex;
     align-items: center;
-    gap: 0.55rem;
+    gap: 0.6rem;
     font-family: var(--font-display);
-    font-size: 1.15rem;
-    font-weight: 900;
-    letter-spacing: 0.12em;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 0;
     color: var(--ink);
   }
-  .brand .mark { color: var(--persimmon); }
-  .brand:hover { color: var(--persimmon-deep); }
-  .links { display: flex; gap: 1.4rem; }
+  .brand .mascot { transition: transform 0.4s var(--ease-spring); }
+  .brand:hover { color: var(--leaf-deep); }
+  .brand:hover .mascot { transform: rotate(-10deg) scale(1.1); }
+  .links { display: flex; gap: 0.5rem; }
   .links a {
-    font-family: var(--font-display);
-    font-size: 0.95rem;
-    letter-spacing: 0.14em;
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    font-weight: 800;
+    letter-spacing: 0;
     color: var(--ink-soft);
-    padding: 0.15rem 0;
-    border-bottom: 2px solid transparent;
-    transition: color 0.25s var(--ease-out), border-color 0.25s var(--ease-out);
+    padding: 0.18rem 0.28rem;
+    border-radius: 6px;
+    background: transparent;
+    transition: transform 0.22s var(--ease-spring), color 0.22s var(--ease-out),
+      background 0.22s var(--ease-out), box-shadow 0.22s var(--ease-out);
   }
-  .links a:hover { color: var(--persimmon); }
+  .links a:hover {
+    color: var(--coral-deep);
+    background: rgba(255, 232, 225, 0.55);
+  }
   .links a[aria-current='page'] {
-    color: var(--persimmon-deep);
-    border-bottom-color: var(--persimmon);
+    color: var(--leaf-deep);
+    background: rgba(228, 243, 220, 0.64);
   }
   .search { margin-left: auto; }
   .search input {
     border: 1px solid var(--hairline);
-    border-radius: 999px;
-    padding: 0.35rem 1rem;
-    background: rgba(255, 253, 246, 0.85);
+    border-radius: var(--r-card);
+    padding: 0.36rem 0.72rem;
+    background: rgba(255, 253, 248, 0.78);
     font-family: var(--font-body);
+    font-weight: 700;
     font-size: 0.9rem;
     color: var(--ink);
-    width: 9.5rem;
+    width: 10rem;
     transition: width 0.35s var(--ease-out), border-color 0.25s;
   }
-  .search input:focus { width: 13rem; border-color: var(--persimmon); }
+  .search input:focus { width: 12rem; border-color: var(--honey-deep); }
   .search input::placeholder { color: var(--ink-mute); }
 
   main {
-    padding: 0 1.25rem 5rem;
+    padding: 0 1.25rem 4.2rem;
     min-height: 60vh;
   }
 
-  /* ——— 页脚 ——— */
   .site-footer {
-    border-top: 1px solid rgba(221, 210, 189, 0.6);
+    border-top: 1px solid rgba(234, 223, 206, 0.76);
     text-align: center;
-    padding: 2.5rem 1.25rem 3rem;
+    padding: 2rem 1.25rem 2.5rem;
+    background: rgba(255, 253, 248, 0.42);
   }
   .site-footer .ornament { margin: 0 auto 1.2rem; }
   .motto {
-    font-family: var(--font-display);
+    font-family: var(--font-body);
+    font-weight: 800;
     color: var(--ink-soft);
-    letter-spacing: 0.3em;
-    text-indent: 0.3em;
+    letter-spacing: 0;
     margin: 0 0 0.6rem;
   }
   .meta { color: var(--ink-mute); font-size: 0.85rem; margin: 0; }
 
   @media (max-width: 640px) {
-    nav { gap: 0.9rem 1.2rem; }
+    nav { gap: 0.8rem 1rem; }
     .search { margin-left: 0; width: 100%; }
     .search input, .search input:focus { width: 100%; }
   }
