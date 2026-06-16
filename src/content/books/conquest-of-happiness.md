@@ -2,7 +2,7 @@
 title: 幸福之路
 author: 伯特兰·罗素
 pubDate: 2026-06-12
-cover: ./covers/conquest-of-happiness.svg
+cover: ./covers/conquest-of-happiness.jpg
 oneLiner: 诺奖得主罗素的幸福生活手册：把注意力从自我转向世界。
 category: 哲学
 tags: [哲学]
