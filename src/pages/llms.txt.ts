@@ -31,7 +31,7 @@ export const GET: APIRoute = async ({ site }) => {
     '',
     ...books.map(
       (b) =>
-        `- [${b.data.title}（${b.data.author}）](${url(`/books/${b.id}/`)})：${b.data.oneLiner}`,
+        `- [${b.data.title}（${b.data.author}）](${b.data.buyUrl})：${b.data.oneLiner}`,
     ),
     '',
     '## 订阅与抓取',

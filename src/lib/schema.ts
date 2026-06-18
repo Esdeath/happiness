@@ -5,7 +5,6 @@ import { SITE } from '../config';
 // 所有 URL 都基于传入的 site（来自 astro.config 的 site 字段），换域名零改动。
 
 type PostEntry = CollectionEntry<'posts'>;
-type BookEntry = CollectionEntry<'books'>;
 
 interface Crumb {
   name: string;
@@ -70,24 +69,6 @@ export function blogPostingSchema(post: PostEntry, site: URL, image: string) {
     keywords: post.data.tags.join('、'),
     image,
     inLanguage: SITE.locale,
-  };
-}
-
-/** 书籍详情页：Book + 站点的一句话点评（Review）。 */
-export function bookSchema(book: BookEntry, site: URL) {
-  const url = abs(`/books/${book.id}/`, site);
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Book',
-    name: book.data.title,
-    author: { '@type': 'Person', name: book.data.author },
-    url,
-    inLanguage: SITE.locale,
-    review: {
-      '@type': 'Review',
-      reviewBody: book.data.oneLiner,
-      author: { '@type': 'Organization', name: SITE.title },
-    },
   };
 }
 

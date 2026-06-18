@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostCard from '../../components/PostCard.astro';
-import BookCard from '../../components/BookCard.astro';
+import BookRow from '../../components/BookRow.astro';
 import { collectTags, sortByDateDesc } from '../../lib/content';
 
 export async function getStaticPaths() {
@@ -41,8 +41,8 @@ const { posts, books } = Astro.props;
   {books.length > 0 && (
     <section class="block wide rise" style="animation-delay: 200ms">
       <h2>书籍</h2>
-      <div class="grid">
-        {books.map((book) => <BookCard book={book} />)}
+      <div class="rows">
+        {books.map((book) => <BookRow book={book} />)}
       </div>
     </section>
   )}
@@ -58,12 +58,5 @@ const { posts, books } = Astro.props;
     padding-left: 0.9rem;
     border-left: 5px solid var(--peach);
   }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    gap: 2.4rem 1.8rem;
-  }
-  @media (max-width: 480px) {
-    .grid { grid-template-columns: repeat(2, 1fr); gap: 1.8rem 1.1rem; }
-  }
+  .rows { display: flex; flex-direction: column; }
 </style>

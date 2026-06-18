@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import BookCard from '../../components/BookCard.astro';
+import BookRow from '../../components/BookRow.astro';
 import { sortByDateDesc, groupByCategory } from '../../lib/content';
 
 const books = sortByDateDesc(
@@ -24,8 +24,8 @@ const groups = groupByCategory(books);
           <span class="count">{items.length} 本</span>
           <i class="rule" aria-hidden="true"></i>
         </header>
-        <div class="grid">
-          {items.map((book) => <BookCard book={book} />)}
+        <div class="rows">
+          {items.map((book) => <BookRow book={book} />)}
         </div>
       </section>
     ))}
@@ -33,12 +33,12 @@ const groups = groupByCategory(books);
 </BaseLayout>
 
 <style>
-  .genre { margin-bottom: 4rem; }
+  .genre { margin-bottom: 3.5rem; }
   .genre-head {
     display: flex;
     align-items: baseline;
     gap: 0.9rem;
-    margin-bottom: 1.6rem;
+    margin-bottom: 0.6rem;
   }
   .genre-head h2 {
     font-size: 1.45rem;
@@ -56,15 +56,5 @@ const groups = groupByCategory(books);
   }
   .rule { flex: 1; height: 1px; background: var(--hairline); }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    gap: 2.4rem 1.8rem;
-  }
-  @media (max-width: 480px) {
-    .grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.8rem 1.1rem;
-    }
-  }
+  .rows { display: flex; flex-direction: column; }
 </style>

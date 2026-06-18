@@ -27,13 +27,16 @@ const books = defineCollection({
       author: z.string(),
       pubDate: z.coerce.date(),
       cover: image(),
+      qrcode: image(),
+      // 一句话简介：首页迷你书单 / RSS / SEO / og 使用
       oneLiner: z.string(),
+      // 较长推荐理由：书单行中间栏展示
+      recommend: z.string(),
+      // 京东联盟推广链接：整行点击 / 封面按钮 / 二维码均指向它
+      buyUrl: z.string().url(),
       // 书单页按 category 分组展示；不填时回退到第一个 tag
       category: z.string().optional(),
       tags: z.array(z.string()).min(1),
-      purchaseLinks: z
-        .array(z.object({ platform: z.string(), url: z.string().url() }))
-        .default([]),
       draft: z.boolean().default(false),
     }),
 });
