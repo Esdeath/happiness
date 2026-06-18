@@ -76,6 +76,17 @@ const navItems = [
       href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Noto+Sans+SC:wght@400;500;700;800&family=ZCOOL+KuaiLe&display=swap"
     />
     <slot name="head" />
+
+    <!-- 百度统计 -->
+    <script is:inline>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?97c1ccba0f6cfc45161925744fd4ddd0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
   </head>
   <body>
     <div class="sky" aria-hidden="true"></div>
