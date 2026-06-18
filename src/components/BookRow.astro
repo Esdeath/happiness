@@ -1,0 +1,141 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  book: CollectionEntry<'books'>;
+}
+const { book } = Astro.props;
+const { title, author, cover, qrcode, recommend, buyUrl } = book.data;
+---
+
+<a
+  class="book-row"
+  href={buyUrl}
+  target="_blank"
+  rel="nofollow sponsored noopener"
+  aria-label={`在京东购买《${title}》（新窗口打开）`}
+>
+  <div class="cover">
+    <Image src={cover} alt={`《${title}》封面`} width={260} />
+    <span class="buy-badge">京东购买 ›</span>
+  </div>
+
+  <div class="meta">
+    <h3>{title}</h3>
+    <p class="author">{author}</p>
+    <p class="desc">{recommend}</p>
+  </div>
+
+  <div class="qr">
+    <Image src={qrcode} alt={`《${title}》京东购买二维码`} width={240} />
+    <span>扫码购买</span>
+  </div>
+</a>
+
+<style>
+  .book-row {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr) 120px;
+    gap: clamp(1.2rem, 4vw, 2.6rem);
+    align-items: center;
+    padding: 1.6rem 0.9rem;
+    border-top: 1px solid var(--hairline);
+    color: var(--ink);
+    transition: background 0.22s var(--ease-out);
+  }
+  .book-row:last-child { border-bottom: 1px solid var(--hairline); }
+  .book-row:hover { background: rgba(255, 253, 248, 0.62); }
+  .book-row:focus-visible {
+    outline: none;
+    background: rgba(255, 253, 248, 0.62);
+    box-shadow: inset 0 0 0 2px var(--peach);
+    border-radius: var(--r-card);
+  }
+
+  /* 左：封面 + 京东购买按钮 */
+  .cover {
+    position: relative;
+    border-radius: 3px 6px 6px 3px;
+    overflow: hidden;
+    aspect-ratio: 5 / 7;
+    box-shadow: 0 6px 14px rgba(81, 66, 61, 0.14);
+  }
+  .cover :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .buy-badge {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--persimmon);
+    color: var(--surface);
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-align: center;
+    padding: 0.28rem 0;
+  }
+
+  /* 中：书名 + 作者 + 推荐理由 */
+  .meta { min-width: 0; }
+  .meta h3 {
+    font-size: clamp(1.1rem, 2.4vw, 1.45rem);
+    font-weight: 900;
+    margin: 0 0 0.25rem;
+    transition: color 0.22s var(--ease-out);
+  }
+  .book-row:hover .meta h3 { color: var(--primary-deep); }
+  .author {
+    color: var(--ink-mute);
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin: 0 0 0.55rem;
+  }
+  .desc {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* 右：二维码 */
+  .qr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .qr :global(img) {
+    width: 120px;
+    height: 120px;
+    border-radius: 8px;
+    background: var(--surface);
+    padding: 4px;
+    box-shadow: 0 4px 12px rgba(81, 66, 61, 0.1);
+  }
+  .qr span {
+    font-family: var(--font-display);
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    color: var(--ink-mute);
+  }
+
+  @media (max-width: 640px) {
+    .book-row {
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 1.1rem;
+      padding: 1.3rem 0.4rem;
+    }
+    .qr { display: none; }
+    .desc { -webkit-line-clamp: 4; }
+  }
+</style>
