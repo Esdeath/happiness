@@ -54,7 +54,12 @@ const jsonLd = [websiteSchema(Astro.site!), organizationSchema(Astro.site!)];
       </header>
       <div class="mini-books">
         {books.map((book) => (
-          <a class="mini-book" href={`/books/${book.id}`}>
+          <a
+            class="mini-book"
+            href={book.data.buyUrl}
+            target="_blank"
+            rel="nofollow sponsored noopener"
+          >
             <Image src={book.data.cover} alt={`《${book.data.title}》封面`} width={92} />
             <span>
               <strong>{book.data.title}</strong>
