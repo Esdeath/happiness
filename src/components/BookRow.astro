@@ -73,6 +73,22 @@ const { title, author, cover, qrcode, recommend, buyUrl } = book.data;
     letter-spacing: 0.06em;
     text-align: center;
     padding: 0.28rem 0;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.22s var(--ease-out), transform 0.22s var(--ease-out);
+  }
+  /* 悬停封面（或键盘聚焦整行）时淡入上滑显示 */
+  .cover:hover .buy-badge,
+  .book-row:focus-visible .buy-badge {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* 触屏无 hover：保持常显，避免按钮永远出不来 */
+  @media (hover: none) {
+    .buy-badge {
+      opacity: 1;
+      transform: none;
+    }
   }
 
   /* 中：书名 + 作者 + 推荐理由 */
