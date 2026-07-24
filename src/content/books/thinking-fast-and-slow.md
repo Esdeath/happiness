@@ -10,3 +10,5 @@ category: 心理学
 tags: [心理学]
 buyUrl: 'https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BATAJK1olWAYLVldVCU4eBl8IGlkWWAYEUl1bOA9IWzFXKwJQGEdAX0BDUA5DX3BTTkRHA1ocVF9fC04XBWkLHURMGFpfZB4HdkltRhpRfltvBHRhVkBUWiJiRCkEF2sUbQUDVldeDkMXBGs4K1sSbUdsUV1YD0knAl8IHVIQVAILUlZbCEsSM2gIEmtOCGgFXVxbXBkSAjsJH1IVbTYyV25aCEIDBR1JSU8TLzYyVG5eOEsWA24MH1kSXwMGSF5YDkgfB3MIHVIQVAILUllfDU8TM20JGl8cbTbc2e4tCgxlChxhQltPWmV-ARhU1sanEh14G1kdXxcyAAU9DR9RSy1-cFIUWAFeXSkdfjQWBmh-XgFNHHBiOlwaWy52XicBXwJ-NlZ4ECdVQHsSM28OG1kl'
 ---
+
+《思考，快与慢》提供了一套理解直觉、审慎思考、启发式偏差和风险选择的共同语言，也提醒人们为重要决定增加一点检验。详细的内容梳理见[读书笔记](/posts/thinking-fast-and-slow-notes/)。

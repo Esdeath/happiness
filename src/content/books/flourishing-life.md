@@ -10,3 +10,5 @@ category: 心理学
 tags: [心理学, 生活方式]
 buyUrl: 'https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BATEJK1olWAYKVllZC0IfA18IHlwXXwUKXG4ZVxNJXF9RXh5UHw0cSgYYXBcIWDoXSQVJQwYHU1xfC0MfHDZNRwYlXgR7DhcJWlF3dyt0bQVxGUVjDCcUTkcbM244GFoXVAUEXF5aDHsnA2g4TTUVXAcDVV9YC0kTM244G10cWA8GXV9YAUwQC18PG1IlBlNsU1dfDh9FBm5cGl8cXTYyZF1tD0seF2l6WgkBW3QyZF5tC3sXAm8AGVkXVQMHU0JdC08UAW8UG10cWA8GXV9fDE4TBV8KGloRVDYyitPtejxgeQwJQxtcG3pSVR0gD5Was35jYlMVXQUTZCYcaExlf21MWBpIJgELXA0OfTFweGgBEwB8HFlwNDBfQwJcWRZKRgtQK3BdVlwdV0wnBl8IHVsXbQ'
 ---
+
+《活出心花怒放的人生》把积极心理学带回中国读者熟悉的工作、关系、婚姻与养育场景，也提醒我们不要用积极心态遮盖真实困境。详细的内容梳理见[读书笔记](/posts/flourishing-life-notes/)。
